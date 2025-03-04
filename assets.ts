@@ -21,6 +21,9 @@ export interface Asset {
   inactive: boolean;
 }
 
+/**
+ * Fetches the assets for a client from HaloPSA, taking care of pagination.
+ */
 export async function fetchAssets(
   url: string,
   token: string,
@@ -47,4 +50,74 @@ export async function fetchAssets(
 
   const parsedResponse = await response.json();
   return parsedResponse.assets;
+}
+
+/**
+ * Creates an asset in HaloPSA.
+ */
+export async function createAsset(
+  url: string,
+  token: string,
+  asset: Omit<Asset, "id">,
+): Promise<Asset> {
+  const response = await fetch(`${url}/api/Asset`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(asset),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to create asset: ${response.statusText}`);
+  }
+
+  const createdAsset = await response.json();
+  return createdAsset;
+}
+
+/**
+ * Updates an existing asset in HaloPSA. Non-existing fields are not modified.
+ */
+export async function updateAsset(
+  url: string,
+  token: string,
+  asset: Asset,
+): Promise<Asset> {
+  const response = await fetch(`${url}/api/Asset/${asset.id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(asset),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to update asset: ${response.statusText}`);
+  }
+
+  const updatedAsset = await response.json();
+  return updatedAsset;
+}
+
+/**
+ * Deletes an asset in HaloPSA.
+ */
+export async function deleteAsset(
+  url: string,
+  token: string,
+  assetId: number,
+): Promise<void> {
+  const response = await fetch(`${url}/api/Asset/${assetId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete asset: ${response.statusText}`);
+  }
 }

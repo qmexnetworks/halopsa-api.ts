@@ -1,5 +1,11 @@
 import { type Client, fetchClients } from "./clients.ts";
-import { type Asset, fetchAssets } from "./assets.ts";
+import {
+  type Asset,
+  createAsset,
+  deleteAsset,
+  fetchAssets,
+  updateAsset,
+} from "./assets.ts";
 
 export class HaloPSA {
   /**
@@ -23,5 +29,17 @@ export class HaloPSA {
 
   assets(clientId: number): Promise<Asset[]> {
     return fetchAssets(this.url, this.token, clientId);
+  }
+
+  createAsset(asset: Omit<Asset, "id">): Promise<Asset> {
+    return createAsset(this.url, this.token, asset);
+  }
+
+  updateAsset(asset: Asset): Promise<Asset> {
+    return updateAsset(this.url, this.token, asset);
+  }
+
+  deleteAsset(assetId: number): Promise<void> {
+    return deleteAsset(this.url, this.token, assetId);
   }
 }
