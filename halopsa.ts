@@ -6,6 +6,7 @@ import {
   fetchAssets,
   updateAsset,
 } from "./assets.ts";
+import { fetchSites, findSites, type Site } from "./site.ts";
 
 export class HaloPSA {
   /**
@@ -41,5 +42,13 @@ export class HaloPSA {
 
   deleteAsset(assetId: number): Promise<void> {
     return deleteAsset(this.url, this.token, assetId);
+  }
+
+  sites(clientId: number): Promise<Array<Site>> {
+    return fetchSites(this.url, this.token, clientId);
+  }
+
+  findSites(clientId: number, search: string): Promise<Array<Site>> {
+    return findSites(this.url, this.token, clientId, search);
   }
 }
