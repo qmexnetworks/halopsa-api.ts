@@ -60,13 +60,13 @@ export async function createAsset(
   token: string,
   asset: Omit<Asset, "id">,
 ): Promise<Asset> {
-  const response = await fetch(`${url}/api/Asset`, {
+  const response = await fetch(`${url}/api/asset`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(asset),
+    body: JSON.stringify([asset]),
   });
 
   if (!response.ok) {
