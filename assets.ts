@@ -85,13 +85,13 @@ export async function updateAsset(
   token: string,
   asset: Asset,
 ): Promise<Asset> {
-  const response = await fetch(`${url}/api/Asset/${asset.id}`, {
-    method: "PATCH",
+  const response = await fetch(`${url}/api/Asset`, {
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(asset),
+    body: JSON.stringify([asset]),
   });
 
   if (!response.ok) {
