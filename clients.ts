@@ -1,5 +1,7 @@
+export type ClientId = number;
+
 export interface Client {
-  id: number;
+  id: ClientId;
   accountsid: string;
   name: string;
 }
