@@ -6,6 +6,17 @@ export interface Asset {
   id: AssetId;
   inventory_number: string;
   fields: Field[];
+
+  client_id: number;
+  client_name: string;
+
+  site_id: number;
+  site_name: string;
+
+  assettype_id: number;
+  assettype_name: string;
+
+  status_id: number;
 }
 
 export async function fetchAssets(
