@@ -17,6 +17,8 @@ export interface Asset {
   assettype_name: string;
 
   status_id: number;
+
+  inactive: boolean;
 }
 
 export async function fetchAssets(
