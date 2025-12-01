@@ -43,7 +43,7 @@ export async function fetchAssets(
 
   const assets = await paginate<Asset>(
     params,
-    `${url}/api/asset?${params.toString()}`,
+    `${url}/api/asset`,
     "assets",
     {
       Authorization: `Bearer ${token}`,

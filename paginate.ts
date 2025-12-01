@@ -9,7 +9,7 @@ export async function paginate<Type>(
   for (let pageNumber = 1; pageNumber < 5000000; pageNumber++) {
     params.set("page_no", pageNumber.toString());
 
-    const response = await fetch(url, {
+    const response = await fetch(url + "?" + params.toString(), {
       method: "GET",
       headers,
     });
