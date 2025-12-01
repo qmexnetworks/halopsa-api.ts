@@ -41,7 +41,7 @@ export async function fetchAssets(
     client_id: clientId ? clientId.toString() : "",
   });
 
-  const assets = paginate<Asset>(
+  const assets = await paginate<Asset>(
     params,
     `${url}/api/asset?${params.toString()}`,
     "assets",
