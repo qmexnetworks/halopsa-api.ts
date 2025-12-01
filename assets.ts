@@ -1,4 +1,5 @@
 import type { Field } from "./custom_fields.ts";
+import { paginate } from "./paginate.ts";
 
 export type AssetId = number;
 
@@ -31,30 +32,25 @@ export async function fetchAssets(
   columnsId?: number,
 ): Promise<Asset[]> {
   const params = new URLSearchParams({
-    pageinate: "false",
-    page_size: "500",
+    // In later/current versions of HaloPSA this parameter is ignored:
+    // pageinate: "false",
+    pageinate: "true",
+    page_size: "500", // Higher values than 50 are ignored, but in case that changes, it'll give a performance boost.
     includecolumns: "true",
     columns_id: columnsId ? columnsId.toString() : "",
     client_id: clientId ? clientId.toString() : "",
   });
 
-  const response = await fetch(`${url}/api/asset?${params.toString()}`, {
-    method: "GET",
-    headers: {
+  const assets = paginate<Asset>(
+    params,
+    `${url}/api/asset?${params.toString()}`,
+    "assets",
+    {
       Authorization: `Bearer ${token}`,
     },
-  });
+  );
 
-  if (!response.ok) {
-    const errResp = await response.json();
-    const { ClassName, Message } = errResp;
-    throw new Error(
-      `Failed to fetch assets: ${response.statusText} (${ClassName}: ${Message})`,
-    );
-  }
-
-  const parsedResponse = await response.json();
-  return parsedResponse.assets;
+  return assets;
 }
 
 /**
