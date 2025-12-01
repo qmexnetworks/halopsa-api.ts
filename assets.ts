@@ -45,7 +45,11 @@ export async function fetchAssets(
   });
 
   if (!response.ok) {
-    throw new Error(`Invalid response from HaloPSA: ${response.statusText}`);
+    const errResp = await response.json();
+    const { ClassName, Message } = errResp;
+    throw new Error(
+      `Failed to fetch assets: ${response.statusText} (${ClassName}: ${Message})`,
+    );
   }
 
   const parsedResponse = await response.json();
@@ -70,7 +74,11 @@ export async function createAsset(
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to create asset: ${response.statusText}`);
+    const errResp = await response.json();
+    const { ClassName, Message } = errResp;
+    throw new Error(
+      `Failed to create asset: ${response.statusText} (${ClassName}: ${Message})`,
+    );
   }
 
   const createdAsset = await response.json();
@@ -95,7 +103,11 @@ export async function updateAsset(
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to update asset: ${response.statusText}`);
+    const errResp = await response.json();
+    const { ClassName, Message } = errResp;
+    throw new Error(
+      `Failed to update asset: ${response.statusText} (${ClassName}: ${Message})`,
+    );
   }
 
   const updatedAsset = await response.json();
@@ -118,6 +130,10 @@ export async function deleteAsset(
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to delete asset: ${response.statusText}`);
+    const errResp = await response.json();
+    const { ClassName, Message } = errResp;
+    throw new Error(
+      `Failed to delete asset: ${response.statusText} (${ClassName}: ${Message})`,
+    );
   }
 }
