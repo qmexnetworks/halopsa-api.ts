@@ -27,14 +27,15 @@ export interface Asset {
 export async function fetchAssets(
   url: string,
   token: string,
-  clientId: number,
+  clientId?: number,
+  columnsId?: number,
 ): Promise<Asset[]> {
   const params = new URLSearchParams({
     pageinate: "false",
     page_size: "500",
     includecolumns: "true",
-    columns_id: "8",
-    client_id: clientId.toString(),
+    columns_id: columnsId ? columnsId.toString() : "",
+    client_id: clientId ? clientId.toString() : "",
   });
 
   const response = await fetch(`${url}/api/asset?${params.toString()}`, {

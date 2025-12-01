@@ -28,8 +28,8 @@ export class HaloPSA {
     return fetchClients(this.url, this.token);
   }
 
-  assets(clientId: number): Promise<Asset[]> {
-    return fetchAssets(this.url, this.token, clientId);
+  assets(clientId?: number, columnsId: number = 8): Promise<Asset[]> {
+    return fetchAssets(this.url, this.token, clientId, columnsId);
   }
 
   createAsset(asset: Omit<Asset, "id">): Promise<Asset> {
