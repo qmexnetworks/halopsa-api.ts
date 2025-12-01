@@ -78,7 +78,7 @@ export async function createAsset(
     const errResp = await response.json();
     const { ClassName, Message } = errResp;
     throw new Error(
-      `Failed to create asset: ${response.statusText} (${ClassName}: ${Message})`,
+      `Failed to create asset ${asset.inventory_number}: ${response.statusText} (${ClassName}: ${Message})`,
     );
   }
 
@@ -107,7 +107,7 @@ export async function updateAsset(
     const errResp = await response.json();
     const { ClassName, Message } = errResp;
     throw new Error(
-      `Failed to update asset: ${response.statusText} (${ClassName}: ${Message})`,
+      `Failed to update asset ${asset.inventory_number}: ${response.statusText} (${ClassName}: ${Message})`,
     );
   }
 
